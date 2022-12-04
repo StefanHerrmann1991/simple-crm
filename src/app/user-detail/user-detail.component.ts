@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/models/user.class';
+import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-address.component';
+import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 
 @Component({
   selector: 'app-user-detail',
@@ -15,7 +18,10 @@ export class UserDetailComponent implements OnInit {
   user: User = new User();
 
 
-  constructor(private firestore: AngularFirestore, private route: ActivatedRoute) { }
+  constructor(
+    private firestore: AngularFirestore,
+    private route: ActivatedRoute,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
@@ -34,7 +40,15 @@ export class UserDetailComponent implements OnInit {
       })
   }
 
-  editUserDetail() {}
+  editUserDetail() { 
+    
+    const dialog = this.dialog.open(DialogEditAddressComponent);
+    dialog.componentInstance.user = this.user;
+  
+  }
 
-  editMenu() {}
+  editMenu() { this.dialog.open(DialogEditAddressComponent); }
+
+
+
 }
